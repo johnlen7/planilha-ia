@@ -49,6 +49,8 @@ model Usuario {
   contas          Conta[]
   midias          Midia[]
   licenca         Licenca?
+  logsAuditoria   LogAuditoria[]
+  relatoriosCache RelatorioCache[]
 }
 
 model Conta {
@@ -70,6 +72,7 @@ model Categoria {
   nome      String
   bloqueada Boolean      @default(false)
   subcategorias Subcategoria[]
+  transacoes Transacao[]
 }
 
 model Subcategoria {

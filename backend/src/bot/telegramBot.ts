@@ -154,6 +154,7 @@ export function buildBot() {
   });
 
   bot.command('consagrar', async (ctx: Context) => {
+    if (!ctx.from) return;
     const usuarioId = ctx.from.id.toString();
     const hoje = new Date();
     const aloc = await consagracaoService.calcularEPersistir(usuarioId, hoje.getMonth()+1, hoje.getFullYear(), { isNaoRecorrente: false });
