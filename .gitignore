@@ -8,6 +8,7 @@ yarn-error.log*
 
 # Build
 /dist/
+/backend/dist/
 /.turbo/
 
 # Env & secrets
