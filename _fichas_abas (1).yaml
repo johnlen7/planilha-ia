@@ -1,0 +1,587 @@
+aba: Captar
+proposito: (a confirmar)
+campos:
+  - nome: 0.0
+    tipo: text
+    obrigatorio: true
+  - nome: Item
+    tipo: text
+    obrigatorio: false
+  - nome: Und
+    tipo: text
+    obrigatorio: false
+  - nome: Qtd
+    tipo: number
+    obrigatorio: false
+  - nome: Objeto
+    tipo: text
+    obrigatorio: false
+  - nome: data aquisição
+    tipo: date
+    obrigatorio: false
+  - nome: data venc
+    tipo: date
+    obrigatorio: false
+  - nome: data movimento
+    tipo: date
+    obrigatorio: false
+  - nome: Movimento
+    tipo: text
+    obrigatorio: false
+  - nome: valor
+    tipo: number
+    obrigatorio: false
+  - nome: Vlr/Und
+    tipo: text
+    obrigatorio: true
+  - nome: modalidade
+    tipo: text
+    obrigatorio: false
+  - nome: origem do valor
+    tipo: text
+    obrigatorio: false
+  - nome: destino do valor
+    tipo: text
+    obrigatorio: false
+  - nome: Pagador
+    tipo: text
+    obrigatorio: false
+  - nome: Recebedor
+    tipo: text
+    obrigatorio: false
+  - nome: subcategoria
+    tipo: text
+    obrigatorio: false
+  - nome: categoria
+    tipo: text
+    obrigatorio: false
+  - nome: vigência
+    tipo: text
+    obrigatorio: true
+  - nome: mês
+    tipo: text
+    obrigatorio: true
+  - nome: ano
+    tipo: text
+    obrigatorio: true
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Patrimonial
+proposito: (a confirmar)
+campos:
+  - nome: col_2
+    tipo: text
+    obrigatorio: false
+  - nome: col_3
+    tipo: text
+    obrigatorio: false
+  - nome: Essencial
+    tipo: text
+    obrigatorio: false
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,D2)
+    tipo: number
+    obrigatorio: true
+  - nome: =E2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,F2)
+    tipo: number
+    obrigatorio: true
+  - nome: =G2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,H2)
+    tipo: number
+    obrigatorio: true
+  - nome: =I2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,J2)
+    tipo: number
+    obrigatorio: true
+  - nome: =K2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,L2)
+    tipo: number
+    obrigatorio: true
+  - nome: =M2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,N2)
+    tipo: number
+    obrigatorio: true
+  - nome: =O2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,P2)
+    tipo: number
+    obrigatorio: true
+  - nome: =Q2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,R2)
+    tipo: number
+    obrigatorio: true
+  - nome: =S2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,T2)
+    tipo: number
+    obrigatorio: true
+  - nome: =U2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,V2)
+    tipo: number
+    obrigatorio: true
+  - nome: =W2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,X2)
+    tipo: number
+    obrigatorio: true
+  - nome: =Y2/$E$8
+    tipo: text
+    obrigatorio: true
+  - nome: =SUMIFS($E$13:$E$39,$C$13:$C$39,Z2)
+    tipo: number
+    obrigatorio: true
+  - nome: =AA2/$E$8
+    tipo: text
+    obrigatorio: true
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Envelope
+proposito: (a confirmar)
+campos:
+  - nome: col_2
+    tipo: text
+    obrigatorio: false
+  - nome: Mês analisado
+    tipo: text
+    obrigatorio: true
+  - nome: agosto
+    tipo: text
+    obrigatorio: true
+  - nome: 2023.0
+    tipo: text
+    obrigatorio: true
+  - nome: col_3
+    tipo: text
+    obrigatorio: true
+  - nome: col_4
+    tipo: text
+    obrigatorio: false
+  - nome: col_5
+    tipo: text
+    obrigatorio: false
+  - nome: col_6
+    tipo: text
+    obrigatorio: true
+  - nome: col_7
+    tipo: text
+    obrigatorio: false
+  - nome: col_8
+    tipo: text
+    obrigatorio: false
+  - nome: col_9
+    tipo: text
+    obrigatorio: false
+  - nome: col_10
+    tipo: text
+    obrigatorio: false
+  - nome: col_11
+    tipo: text
+    obrigatorio: false
+  - nome: col_12
+    tipo: text
+    obrigatorio: false
+  - nome: col_13
+    tipo: text
+    obrigatorio: false
+  - nome: col_14
+    tipo: text
+    obrigatorio: false
+  - nome: col_15
+    tipo: text
+    obrigatorio: false
+  - nome: col_16
+    tipo: text
+    obrigatorio: false
+  - nome: col_17
+    tipo: text
+    obrigatorio: false
+  - nome: col_18
+    tipo: text
+    obrigatorio: false
+  - nome: col_19
+    tipo: text
+    obrigatorio: false
+  - nome: col_20
+    tipo: text
+    obrigatorio: false
+  - nome: col_21
+    tipo: text
+    obrigatorio: false
+  - nome: col_22
+    tipo: text
+    obrigatorio: false
+  - nome: col_23
+    tipo: text
+    obrigatorio: false
+  - nome: col_24
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Renda
+proposito: (a confirmar)
+campos:
+  - nome: Itens
+    tipo: text
+    obrigatorio: true
+  - nome: Dados pertinentes
+    tipo: text
+    obrigatorio: true
+  - nome: Classificação da renda
+    tipo: text
+    obrigatorio: true
+  - nome: =Ajustes!W1
+    tipo: text
+    obrigatorio: true
+  - nome: =Ajustes!X1
+    tipo: text
+    obrigatorio: false
+  - nome: col_2
+    tipo: text
+    obrigatorio: false
+  - nome: col_3
+    tipo: text
+    obrigatorio: false
+  - nome: col_4
+    tipo: text
+    obrigatorio: false
+  - nome: col_5
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Monitor
+proposito: (a confirmar)
+campos:
+  - nome: agosto
+    tipo: text
+    obrigatorio: false
+  - nome: 2023.0
+    tipo: text
+    obrigatorio: false
+  - nome: col_2
+    tipo: text
+    obrigatorio: false
+  - nome: =IF(E3<=Ajustes!$W$2,Ajustes!$X$2,VLOOKUP(E3,Ajustes!$W$2:$X$7,2,TRUE))
+    tipo: text
+    obrigatorio: false
+  - nome: col_4
+    tipo: text
+    obrigatorio: true
+  - nome: col_5
+    tipo: text
+    obrigatorio: true
+  - nome: col_6
+    tipo: text
+    obrigatorio: true
+  - nome: =IF(J3<=Ajustes!$W$2,Ajustes!$X$2,VLOOKUP(J3,Ajustes!$W$2:$X$7,2,TRUE))
+    tipo: text
+    obrigatorio: true
+  - nome: col_8
+    tipo: text
+    obrigatorio: false
+  - nome: col_9
+    tipo: text
+    obrigatorio: false
+  - nome: col_10
+    tipo: text
+    obrigatorio: false
+  - nome: col_11
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Analisar
+proposito: (a confirmar)
+campos:
+  - nome: col
+    tipo: text
+    obrigatorio: true
+  - nome: col_2
+    tipo: text
+    obrigatorio: true
+  - nome: ANO
+    tipo: text
+    obrigatorio: true
+  - nome: col_3
+    tipo: text
+    obrigatorio: true
+  - nome: Média - Mês
+    tipo: text
+    obrigatorio: true
+  - nome: col_4
+    tipo: text
+    obrigatorio: true
+  - nome: Média - Ano
+    tipo: text
+    obrigatorio: true
+  - nome: col_5
+    tipo: text
+    obrigatorio: true
+  - nome: janeiro
+    tipo: text
+    obrigatorio: true
+  - nome: col_6
+    tipo: text
+    obrigatorio: true
+  - nome: fevereiro
+    tipo: text
+    obrigatorio: true
+  - nome: col_7
+    tipo: text
+    obrigatorio: true
+  - nome: março
+    tipo: text
+    obrigatorio: true
+  - nome: col_8
+    tipo: text
+    obrigatorio: true
+  - nome: abril
+    tipo: text
+    obrigatorio: true
+  - nome: col_9
+    tipo: text
+    obrigatorio: true
+  - nome: maio
+    tipo: text
+    obrigatorio: true
+  - nome: col_10
+    tipo: text
+    obrigatorio: true
+  - nome: junho
+    tipo: text
+    obrigatorio: true
+  - nome: col_11
+    tipo: text
+    obrigatorio: true
+  - nome: julho
+    tipo: text
+    obrigatorio: true
+  - nome: col_12
+    tipo: text
+    obrigatorio: true
+  - nome: agosto
+    tipo: text
+    obrigatorio: true
+  - nome: col_13
+    tipo: text
+    obrigatorio: true
+  - nome: setembro
+    tipo: text
+    obrigatorio: true
+  - nome: col_14
+    tipo: text
+    obrigatorio: true
+  - nome: outubro
+    tipo: text
+    obrigatorio: true
+  - nome: col_15
+    tipo: text
+    obrigatorio: true
+  - nome: novembro
+    tipo: text
+    obrigatorio: true
+  - nome: col_16
+    tipo: text
+    obrigatorio: true
+  - nome: dezembro
+    tipo: text
+    obrigatorio: true
+  - nome: col_17
+    tipo: text
+    obrigatorio: true
+  - nome: col_19
+    tipo: text
+    obrigatorio: false
+  - nome: 2023.0
+    tipo: text
+    obrigatorio: false
+  - nome: Média - mês
+    tipo: text
+    obrigatorio: false
+  - nome: janeiro_2
+    tipo: text
+    obrigatorio: false
+  - nome: fevereiro_2
+    tipo: text
+    obrigatorio: false
+  - nome: março_2
+    tipo: text
+    obrigatorio: false
+  - nome: abril_2
+    tipo: text
+    obrigatorio: false
+  - nome: maio_2
+    tipo: text
+    obrigatorio: false
+  - nome: junho_2
+    tipo: text
+    obrigatorio: false
+  - nome: julho_2
+    tipo: text
+    obrigatorio: false
+  - nome: agosto_2
+    tipo: text
+    obrigatorio: false
+  - nome: setembro_2
+    tipo: text
+    obrigatorio: false
+  - nome: outubro_2
+    tipo: text
+    obrigatorio: false
+  - nome: novembro_2
+    tipo: text
+    obrigatorio: false
+  - nome: dezembro_2
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Panorama
+proposito: (a confirmar)
+campos:
+  - nome: Mês
+    tipo: text
+    obrigatorio: true
+  - nome: Renda
+    tipo: text
+    obrigatorio: true
+  - nome: Fidelidade
+    tipo: text
+    obrigatorio: true
+  - nome: Essencial
+    tipo: text
+    obrigatorio: true
+  - nome: Incremental
+    tipo: text
+    obrigatorio: true
+  - nome: Cobertura
+    tipo: text
+    obrigatorio: true
+  - nome: Emergencial
+    tipo: text
+    obrigatorio: true
+  - nome: Projetos
+    tipo: text
+    obrigatorio: true
+  - nome: Amenidades
+    tipo: text
+    obrigatorio: true
+  - nome: Manejo
+    tipo: text
+    obrigatorio: true
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Ajustes
+proposito: (a confirmar)
+campos:
+  - nome: Modalidade
+    tipo: text
+    obrigatorio: false
+  - nome: Origem/Destino Valor
+    tipo: text
+    obrigatorio: false
+  - nome: Pagador/Recebedor
+    tipo: text
+    obrigatorio: false
+  - nome: Subcategoria
+    tipo: text
+    obrigatorio: true
+  - nome: Categoria
+    tipo: text
+    obrigatorio: false
+  - nome: col_9
+    tipo: text
+    obrigatorio: false
+  - nome: col_10
+    tipo: text
+    obrigatorio: false
+  - nome: col_11
+    tipo: number
+    obrigatorio: false
+  - nome: col_12
+    tipo: number
+    obrigatorio: false
+  - nome: col_13
+    tipo: number
+    obrigatorio: false
+  - nome: col_14
+    tipo: number
+    obrigatorio: false
+  - nome: col_15
+    tipo: number
+    obrigatorio: false
+  - nome: col_16
+    tipo: number
+    obrigatorio: false
+  - nome: Faixa de Renda
+    tipo: number
+    obrigatorio: false
+  - nome: Graus de Meta
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"
+
+aba: Melhorando
+proposito: (a confirmar)
+campos:
+  - nome: Distribur os valores alocados em cada instituição conforme categoria
+    tipo: text
+    obrigatorio: true
+  - nome: OK
+    tipo: text
+    obrigatorio: false
+  - nome: 2023-03-07 00:00:00
+    tipo: date
+    obrigatorio: false
+  - nome: col
+    tipo: text
+    obrigatorio: false
+  - nome: TEF
+    tipo: text
+    obrigatorio: false
+relacoes: []
+formulas_chave: []
+regras_preenchimento:
+  - "(a confirmar)"

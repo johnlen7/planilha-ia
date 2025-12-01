@@ -1,0 +1,23 @@
+[
+  {
+    "regra": "Consagrações pós-receita",
+    "quando": "transacao.tipo in [\"Entrada\",\"Receita\",\"Crédito\"]",
+    "entao": [
+      "alocar \"Dízimo\" = 0.10 * transacao.valor_base",
+      "alocar \"Oferta Regular\" = faixa(0.05..0.10) * transacao.valor_base",
+      "alocar \"Poupança\" = 0.10 * transacao.valor_base",
+      "restante -> \"Custeio\""
+    ],
+    "excecoes": [
+      "Receitas não recorrentes usam oferta mínima de 0.05"
+    ],
+    "ordem": [
+      "Dízimo",
+      "Oferta Regular",
+      "Poupança",
+      "Custeio"
+    ],
+    "_detectado_colunas_dizimo": [],
+    "_detectado_colunas_oferta": []
+  }
+]

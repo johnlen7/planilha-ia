@@ -1,0 +1,31 @@
+# Node
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# Build
+/dist/
+/.turbo/
+
+# Env & secrets
+.env
+backend/.env
+.env.*
+
+# Prisma
+prisma/*.db
+
+# IDE
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Coverage / tests
+coverage/
+
+# Misc
+*.sqlite
+*.pid

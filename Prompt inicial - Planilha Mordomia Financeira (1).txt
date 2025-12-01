@@ -1,0 +1,115 @@
+A visão aqui é que a renda de uma família pertence 100% à Deus e, como seus mordomos, nos dedicamos à responsabilidade de gestão (guarda, manejo, geração, multiplicação, investimento, doações, sustento) de toda riqueza financeira que por nós passa.
+
+Temos como premissa que a mordomia seja feita pelos membros da família usando os princípios bíblicos cristãos como apresentado pelos adventistas do sétimo dia.
+
+A planilha que anexa "Base Mordomia Financeira" é a evolução da planilha anterior e, consequentemente, resultado de alguns anos de adaptações em nosso modelo de mordomia financeira (existem outros áreas da mordomia, como a mordomia do tempo e a do corpo, por exemplo).
+
+Objetivo
+Organizar, passo a passo, como a planilha foi usada e como ela está estruturada, para extrair regras de negócio, fluxos e métricas que alimentarão o MVP.
+
+Roteiro de explicação (5 etapas)
+
+1) Fundamentos de Mordomia (contexto e governança)
+Princípios: dízimo (percentual e base), ofertas (modelos: regular, missão, projetos), prioridades bíblicas.
+Unidade de gestão: quem é a “família” (membros, papéis e autoridade de decisão).
+Ciclo de vida: datas de corte (mês financeiro), calendário e respeito ao sábado (evitar atividades seculares entre sex pôr-do-sol e sáb pôr-do-sol).
+Objetivos: quão “automatizado” é o rateio? quais metas (reserva, doações, dívidas, investimentos)?
+
+2) Mapa da Planilha (inventário técnico)
+Para cada aba, descreva:
+Nome e propósito (ex.: “Captar”: registro diário de entradas/saídas).
+Campos: nome, tipo (texto, número, data), obrigatoriedade, validação, listas.
+Relações: como se conecta com outras abas (ex.: Categoria → Envelope).
+Células-chave e fórmulas: somatórios, percentuais, travas (ex.: dízimo = 10% * base).
+Regras de preenchimento: quem preenche, quando e com que frequência.
+
+3) Processos operacionais (o “como fazer” no dia a dia)
+Entrada de Receitas: fontes, periodicidade, data de competência vs. pagamento.
+Consagrações: ordem do rateio (dízimo → ofertas → poupança → despesas), bases de cálculo, exceções.
+Orçamento/Envelopes: definição de tetos, ajustes e rollovers.
+Pagamentos e Conciliação: uso de contas/cartões, fechamento e reconciliação bancária.
+Fundos & Metas: reservas, dívidas, investimentos (critérios de aporte e resgate).
+Relatórios: quais visões a família usa (mensal, anual, por centro, por projeto).
+
+4) Regras de negócio (declaração explícita)
+Liste como “se/então”, com percentuais e exceções:
+Base do dízimo: bruto? líquido? inclui rendas não recorrentes?
+Ofertas: percentuais fixos, faixas (ex.: 5–10%), destinos (missão local/global).
+Prioridades: quando falta recurso, o que é protegido? (ex.: dízimo nunca reduzido).
+Gatilhos: “se saldo do Fundo de Emergência < 6 meses → aumentar poupança para 15%”.
+
+5) Métricas e decisões
+KPIs: taxa de fidelidade (dízimo/oferta sobre renda), taxa de poupança, runway da reserva, % orçamento executado, tendência de dívidas.
+Alertas: desvios > X%, categorias estouradas, atraso de conciliação.
+Relatórios do MVP: mensal, anual, por centro de custo, por destino de doação.
+
+Templates rápidos (para documentar de forma consistente)
+A) Ficha de Aba (YAML)
+aba: Lançamentos
+proposito: Registro de todas as transações
+campos:
+  - nome: data
+    tipo: date
+    obrigatorio: true
+  - nome: tipo
+    tipo: enum[receita, despesa, transferencia]
+    obrigatorio: true
+  - nome: valor
+    tipo: number
+    obrigatorio: true
+  - nome: categoria
+    tipo: ref(Categorias.nome)
+    obrigatorio: true
+relacoes:
+  - de: categoria
+    para: Categorias.nome
+formulas_chave:
+  - nome: total_mes
+    definicao: soma(valor) por mês
+regras_preenchimento:
+  - "Lançar no dia do fato; conciliar semanalmente."
+
+B) Regra de Negócio (DSL simples)
+regra: Consagrações pós-receita
+quando: transacao.tipo == "receita"
+entao:
+  - alocar "Dízimo" = 0.10 * transacao.valor_base
+  - alocar "Oferta Regular" = faixa(0.05..0.10) * transacao.valor_base
+  - alocar "Poupança" = 0.10 * transacao.valor_base
+  - restante -> "Custeio"
+excecoes:
+  - "Receitas não recorrentes usam oferta mínima de 0.05"
+ordem: ["Dízimo","Oferta Regular","Poupança","Custeio"]
+
+C) Processo Operacional (checklist)
+processo: Fechamento Mensal
+passos:
+  - Fechar lançamentos até dia 28 (competência)
+  - Calcular consagrações e aplicar rateio
+  - Ajustar envelopes e metas
+  - Conciliar com extratos
+  - Gerar relatório e revisar em família
+SLA: mensal (D+2)
+restricoes: evitar atividades seculares sexta-pôr-do-sol a sábado-pôr-do-sol (America/Sao_Paulo)
+
+Saídas esperadas (para virar base do MVP)
+* Glossário (termos, percentuais, destinos).
+* Dicionário de Dados (por aba/campo).
+* Catálogo de Regras (DSL).
+* Playbook Operacional (processos).
+* Catálogo de Métricas/Relatórios (consultas e visualizações).
+
+Qualidade, segurança e fé/valores
+> Segurança: use exemplos anonimizados; evite nomes/CPFs; compartilhe amostras, não bases completas.
+> Integridade financeira: mantenha as regras de consagração imutáveis por padrão (auditoria quando alterar).
+> Sábado: planeje fechamentos e revisões fora do período sabático.
+
+Próximos passos práticos
+
+1. Inventário inicial: descreva abas e relações críticas usando os templates acima.
+2. Regras centrais: escreva as regras de dízimo, ofertas e poupança com percentuais, bases e exceções.
+3. Processo mensal: documente o fechamento mensal completo (checklist + SLA).
+
+Para este chat além das regras do projeto preciso de uma linguagem para leigos, pois será melhor para o criador da planilha entender os conceitos. Use Pt-Br prioritariamente e quando não houver maneira de evitar termos estrangeiros traga a explicação.
+
+Dito isto, faça a verredura completa da planilha "Mordomia Financeira.xlsx".

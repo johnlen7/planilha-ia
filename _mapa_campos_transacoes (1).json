@@ -1,0 +1,9 @@
+{
+  "Captar": {
+    "data": "data aquisição",
+    "tipo": "Movimento",
+    "valor": "valor",
+    "categoria": "categoria",
+    "conta": "origem do valor"
+  }
+}

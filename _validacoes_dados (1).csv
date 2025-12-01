@@ -1,0 +1,26 @@
+aba,tipo,formula1,formula2,permitir_em_branco,operador,intervalo
+Captar,list,Ajustes!$L$2:$L$12,,True,,U2:U1002
+Captar,list,"""Entrada,manejo,Saída""",,True,,K2:K1002
+Captar,list,Ajustes!$H$2:$H$7,,True,,Q2:R1002
+Captar,list,Ajustes!$D$2:$D$16,,True,,N2:N1002
+Captar,list,Ajustes!$F$2:$F$26,,True,,O2:P1002
+Captar,list,Ajustes!$J$2:$J$66,,True,,T2:T1002
+Patrimonial,list,Ajustes!$L$2:$L$12,,True,,D2:D7 C13:C39
+Patrimonial,list,Ajustes!$F$2:$F$26,,True,,B13:B39
+Patrimonial,list,Ajustes!$J$2:$J$66,,True,,D13:D39
+Envelope,list,Ajustes!$L$2:$L$12,,True,,B32:B38 B44:B50
+Envelope,list,"""janeiro,fevereiro,março,abril,maio,junho,julho,agosto,setembro,outubro,novembro,dezembro""",,True,,D1 D18 F18 H18 J18 L18 N18 P18 R18 T18 V18 X18 Z18
+Envelope,list,Ajustes!$J$2:$J$66,,True,,C7:C12 C21:C26
+Renda,list,Ajustes!$L$2:$L$12,,True,,B26:B32 B38:B44 B50:B56 B79 B85:B90
+Renda,list,"""janeiro,fevereiro,março,abril,maio,junho,julho,agosto,setembro,outubro,novembro,dezembro""",,True,,C5
+Renda,list,Ajustes!$J$2:$J$66,,True,,C80:C84
+Monitor,list,Ajustes!$L$2:$L$12,,True,,B10 G10 L10 B14 L14 B18 L18 B27 L27 L36 B39 L42 B47
+Monitor,list,"""janeiro,fevereiro,março,abril,maio,junho,julho,agosto,setembro,outubro,novembro,dezembro""",,True,,B2
+Monitor,list,Ajustes!$J$2:$J$66,,True,,G17 L29:L32 B29:B33 B35 L38 G28:G41 B41:B43 L44 G46:G49 B49:B52 G54:G61 G66:G73 G78:G84 G88
+Analisar,list,Ajustes!$L$2:$L$12,,True,,AH3:AH9 AH11:AH12 B4:B64 B66:B67
+Analisar,list,"""janeiro,fevereiro,março,abril,maio,junho,julho,agosto,setembro,outubro,novembro,dezembro""",,True,,I1 K1 M1 O1 Q1 S1 U1 W1 Y1 AA1 AC1 AE1 AK1:AV1
+Analisar,list,Ajustes!$J$2:$J$66,,True,,A4:A64 A66:A67
+Panorama,list,"""janeiro,fevereiro,março,abril,maio,junho,julho,agosto,setembro,outubro,novembro,dezembro""",,True,,B4:B15 B57:B68
+Panorama,list,Ajustes!$L$2:$L$12,,True,,C3:K3 C56:K56
+Ajustes,list,Ajustes!$L$2:$L$12,,True,,N3 N9:N14
+Ajustes,list,Ajustes!$J$2:$J$66,,True,,O4:O8

@@ -1,0 +1,201 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoTransacao {
+  ENTRADA
+  SAIDA
+  MANEJO
+}
+
+enum TipoConsagracao {
+  DIZIMO
+  OFERTA_REGULAR
+  OFERTA_PONTUAL
+  POUPANCA
+  CUSTEIO
+}
+
+enum StatusMidia {
+  CAPTURADO
+  TRANSCRITO
+  PARSE_OK
+  PENDENTE_CONFIRMACAO
+  CONFIRMADO
+  ERRO
+}
+
+enum PlanoUsuario {
+  GRATUITO
+  APOIO
+  PRO
+}
+
+model Usuario {
+  id              String        @id @default(cuid())
+  telegramId      String        @unique
+  plano           PlanoUsuario  @default(GRATUITO)
+  timezone        String        @default("America/Sao_Paulo")
+  sabaticoInicio  DateTime?
+  sabaticoFim     DateTime?
+  criadoEm        DateTime      @default(now())
+  transacoes      Transacao[]
+  consagracoes    Consagracao[]
+  contas          Conta[]
+  midias          Midia[]
+  licenca         Licenca?
+}
+
+model Conta {
+  id         String     @id @default(cuid())
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
+  usuarioId  String
+  nome       String
+  tipo       String
+  saldoInicialCentavos Int @default(0)
+  ano        Int?
+  ativo      Boolean    @default(true)
+  criadoEm   DateTime   @default(now())
+  origemTransacoes Transacao[] @relation("OrigemConta")
+  destinoTransacoes Transacao[] @relation("DestinoConta")
+}
+
+model Categoria {
+  id        String       @id
+  nome      String
+  bloqueada Boolean      @default(false)
+  subcategorias Subcategoria[]
+}
+
+model Subcategoria {
+  id          String     @id
+  nome        String
+  categoria   Categoria  @relation(fields: [categoriaId], references: [id])
+  categoriaId String
+  visivel     Boolean    @default(true)
+  lockName    Boolean    @default(false)
+  bloqueada   Boolean    @default(false)
+  transacoes  Transacao[]
+}
+
+model ParametrosGrauHistorico {
+  id            String   @id @default(cuid())
+  grau          String
+  faixaMinCentavos Int
+  faixaMaxCentavos Int
+  percentuaisJson  Json
+  fidelidadeJson   Json
+  mes            Int
+  ano            Int
+  effectiveFrom  DateTime @default(now())
+  criadoEm       DateTime @default(now())
+  consagracoes   Consagracao[]
+  @@index([ano, mes, grau])
+}
+
+model Transacao {
+  id             String        @id @default(cuid())
+  usuario        Usuario       @relation(fields: [usuarioId], references: [id])
+  usuarioId      String
+  indice         String
+  dataAquisicao  DateTime?
+  dataVencimento DateTime?
+  dataMovimento  DateTime
+  tipo           TipoTransacao
+  valorCentavos  Int
+  modalidade     String?
+  origemConta    Conta?        @relation("OrigemConta", fields: [origemContaId], references: [id])
+  origemContaId  String?
+  destinoConta   Conta?        @relation("DestinoConta", fields: [destinoContaId], references: [id])
+  destinoContaId String?
+  categoria      Categoria?    @relation(fields: [categoriaId], references: [id])
+  categoriaId    String?
+  subcategoria   Subcategoria? @relation(fields: [subcategoriaId], references: [id])
+  subcategoriaId String?
+  observacao     String?
+  flags          Json?
+  isNaoRecorrente Boolean      @default(false)
+  criadoEm       DateTime      @default(now())
+  consagracoes   Consagracao[]
+  midias         Midia[]
+  @@index([usuarioId, dataMovimento])
+  @@index([usuarioId, categoriaId])
+}
+
+model Consagracao {
+  id                 String                @id @default(cuid())
+  usuario            Usuario               @relation(fields: [usuarioId], references: [id])
+  usuarioId          String
+  transacao          Transacao?            @relation(fields: [transacaoId], references: [id])
+  transacaoId        String?
+  parametrosSnapshot ParametrosGrauHistorico @relation(fields: [parametrosSnapshotId], references: [id])
+  parametrosSnapshotId String
+  tipo               TipoConsagracao
+  percentual         Decimal               @db.Decimal(6,3)
+  valorCentavos      Int
+  ordem              Int
+  mes                Int
+  ano                Int
+  criadoEm           DateTime              @default(now())
+  @@index([usuarioId, ano, mes, tipo])
+}
+
+model Midia {
+  id               String       @id @default(cuid())
+  usuario          Usuario      @relation(fields: [usuarioId], references: [id])
+  usuarioId        String
+  transacao        Transacao?   @relation(fields: [transacaoId], references: [id])
+  transacaoId      String?
+  tipo             String
+  telegramFileId   String?
+  transcriptRaw    String?
+  transcript       String?
+  lingua           String?
+  valorDetectadoCentavos Int?
+  valorConfidence  Float?
+  intentClass      String?
+  categoriaSugestao String?
+  subcategoriaSugestao String?
+  status           StatusMidia @default(CAPTURADO)
+  criadoEm         DateTime    @default(now())
+  atualizadoEm     DateTime    @updatedAt
+  erro             String?
+  @@index([usuarioId, status])
+}
+
+model Licenca {
+  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId    String    @id
+  edition      PlanoUsuario
+  payload      Json
+  exp          DateTime
+  assinatura   String
+  criadoEm     DateTime   @default(now())
+}
+
+model LogAuditoria {
+  id         BigInt     @id @default(autoincrement())
+  usuario    Usuario?   @relation(fields: [usuarioId], references: [id])
+  usuarioId  String?
+  tipo       String
+  detalhes   Json?
+  criadoEm   DateTime   @default(now())
+  @@index([usuarioId, criadoEm])
+}
+
+model RelatorioCache {
+  id           String    @id @default(cuid())
+  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId    String
+  periodoInicio DateTime
+  periodoFim    DateTime
+  tipo          String
+  payload       Json
+  geradoEm      DateTime  @default(now())
+  @@unique([usuarioId, periodoInicio, periodoFim, tipo])
+}

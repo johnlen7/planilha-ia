@@ -1,0 +1,462 @@
+Guia das Regras de Negócio - MorFin
+
+Aqui vai um guia didático e completo das regras de negócio — organizado por funcionalidades conforme encontradas nas abas da planilha Base Mordomia Financeira e com regras transversais. O objetivo é facilitar o entendimento e aplicação cotidiana e a implementação segura por qualquer dev.
+
+Visão-geral das abas
+CR – Captar: Lançamento de entradas, saídas e manejos (transferências internas).
+PL – Patrimonial: saldos por conta e conciliação (ΔReal vs ΔCalculado).
+EV – Envelope: calcula Dízimo (10%) e Ofertas regulares por grau, e registra pontuais.
+AJ – Ajustes: estrutura inicial para o usuário configurando informações importantes como contas, categorias/subcategorias, faixas e percentuais).
+RD – Renda (leitura): apura a base de renda do mês e define o grau de meta.
+MR – Monitor (leitura): KPIs mínimos (fidelidade/renda; aderência por categoria) e alertas.
+AN – Analisar (leitura): cortes por mês/categoria/subcategoria (pós-MVP ampliado).
+PN – Panorama (leitura): visão anual e tendências (pós-MVP ampliado).
+ML – Melhorando: ideias, oportunidades e backlog (gestão de produto).
+
+Regras transversais (valem para todo o sistema)
+Moeda e arredondamento
+Unidade base: centavos (inteiro). Para exibir, formatar em R$ com 2 casas.
+Ao distribuir percentuais, seja fiel às regras definidas e aos cálculos da faixa de renda e graus de meta correspondentes.
+
+
+Competência (mês/ano)
+O mês de competência é extraído da data do lançamento.
+Lançamentos retroativos reprocessam cálculos daquele mês (grau, KPIs, etc.), por isso deverá existir sistema de alertas à esta condição.
+
+
+Classificação de lançamentos (preenchimento manual ou automático conforme atalhos)
+Entrada: soma-se seu valor ao patrimônio. 
+Saída: subtrai-se seu valor de patrimônio.
+Manejo: transferência interna (origem e destino do próprio usuário) → efeito patrimonial zero.
+
+
+Modo sabático (automático podendo ser feito o desbloqueio manual a qualquer momento)
+Bloqueado: criar/editar lançamentos, exportações, conciliações.
+Permitido: leitura, revisão e consagração (planejar Dízimo/Ofertas/Doações em Envelope, inclusive efetivar).
+
+
+Plano gratuito x Pro
+Plano gratuito: categorias/subcategorias pré-definidas e não editáveis; limites/visões reduzidos e marca d’água nas exportações.
+Pro: libera MR/PL/Export completos e personalização limitada (p.ex., renomear/ocultar/adicionar subcategorias).
+Doação (Apoiador): pequenas melhorias (p.ex., mais visualizações em MR/PL; exportações com menos limite).
+
+
+Aba AJ – Ajustes
+Propósito
+ Configurar a base operacional: contas, taxonomia (categorias/subcategorias), faixas de renda (graus) e percentuais.
+Dados
+Contas: nome, tipo (banco, espécie, aplicação), saldo inicial (por ano).
+Categorias/Subcategorias:
+Fidelidade (Dízimo; Pacto; Missionária; Humanitária; Diversas; Outros (Fidelidade))
+Essencial, Incremental, Cobertura, Emergencial, Projetos, Amenidades
+
+
+Grau de meta (faixas): Sub, M1, M2, M3, M4, M5 (limites conforme especificação).
+Percentuais por grau: distribuição (Fidelidade/Essencial/…); dentro de Fidelidade, percentuais para Dízimo/Ofertas.
+Regras
+Plano gratuito: categorias/subcategorias fixas, não editáveis.
+Validações:
+Em cada grau, soma das categorias = 100%.
+Em Fidelidade, Dízimo = 10% da base (imutável); soma Dízimo+Ofertas = percentual de Fidelidade no grau.
+Faixas sem sobreposição e contínuas (ex.: ≤ 1000, >1000 e ≤4000, …).
+
+
+Publicação de ajustes: alterações passam por prévia (preview) e só valem para mês corrente em diante (opção recomendada).
+Erros comuns
+Sobrepor faixas de renda.
+Somatório ≠ 100%.
+Tentar mudar Dízimo ≠ 10% (não permitido).
+Aba CR –  Captar
+Propósito
+ Registrar o dia a dia: Entradas, Saídas e manejos. Aba captar é a forma de registrar e editar (corrigir e atualizar) cada registro. Podem existir atalho que facilitem o preenchimento de campo, ex.: clicar num botão "efetivar" poderia abrir uma caixa de pesquisa apenas para os itens que ainda não possuem data de movimento registrada para que o usuário edite este campo; um botão reembolso poderia abrir uma caixa de pesquisa e duplicar os dados de determinado item conferindo novo Índice (por se tratar de novo item), adicionando a palavra Reembolso ou algum abreviação e colocando sinal negativo no valor a ser digitado pelo usuário.
+Campos mínimos
+Data de aquisição, Data vencimento e Data Movimento.
+Valor (sinal negativo se reembolso)
+(Tipo de) Movimento (Entrada|Saída|manejo)
+Origem (alocação de onde saiu o dinheiro) e Destino (alocação para onde foi o dinheiro)
+Categoria e Subcategoria (ambas sempre aplicáveis)
+Observação (opcional)
+Explicação dos campos da aba Captar
+A) Índice (obrigatório, automático)
+O que é: número sequencial do lançamento em ordem crescente e ininterrupta para o ano vigente.
+Formato: número inteiro (número; formato “0000”).
+Como preencher: será gerado automaticamente.
+Exemplos: 0001, 0002, 0003, 0004, …
+
+B) Item (obrigatório, manual)
+O que é: nome do lançamento para identificação rápida e simples.
+Formato: texto curto (texto livre; 50 caracteres).
+Como preencher: escreva descritivo objetivo do lançamento.
+Exemplos: “Aluguel JAN”, “Salário Pessoa 01”, “Eletricidade FEV”, …
+
+C) Marca (opcional, manual)
+O que é: um nome, termo, expressão que identifica quem disponibiliza aquele item.
+Formato: texto curto (texto livre; 50 caracteres).
+Como preencher: use se fizer sentido diferenciar determinados produtos.
+Exemplos: “CPB”, “Granado”, “SpaceX”, “Havaianas”, …
+
+D) Modelo/Tipo (opcional, manual)
+O que é: palavras ou série de caracteres referindo-se à versão ou tipo específico do item.
+Formato: texto médio (texto livre; 100 caracteres).
+Como preencher: use se fizer sentido esta diferenciação de produto/serviço.
+Exemplos: “SM-G570M/DS”, “XT1802”, “iPhone 15”, “Desktop 603KJ01”, …
+
+E) Unidade (opcional, manual)
+O que é: unidade de medida pela qual o item é disponibilizado.
+Formato: texto curto (texto livre; 50 caracteres).
+Como preencher: escrever a unidade de medida desejada.
+Exemplos: “Mês” (aluguel), “Kw/h” (eletricidade), “Kg” (alimentação), “Gb” (internet), …
+
+F) Quantidade (opcional, manual)
+O que é: quantidade relativa à unidade do item.
+Formato: número (número; formato “0000”).
+Como preencher: escreva a quantidade em números.
+Exemplos: “1” (mensalidade, aluguel), “1500” (gigabytes, internet), “28” (quilowatt hora, eletricidade), …
+
+G) Objeto (opcional, manual)
+O que é: natureza do item, a forma como se caracteriza aquele movimento financeiro (rótulo curto).
+Formato: texto curto (texto livre; 50 caracteres).
+Como preencher: escolha o que representa o objeto movimentado.
+Exemplos: “Mensalidade”, “Parcela”, “Anualidade”, “Pacote”, “Taxa Única”, “Burocracia”, …
+
+H) Data Aquisição (obrigatório, manual)
+O que é: data em que houve a decisão e efetivo compromisso financeiro com aquele item. Importante: define o mês/ano como base para os cálculos de dos movimentos previstos.
+Formato: data (data; formato “ddMMMyy”).
+Como preencher: selecionar a data de aquisição/contratação.
+Exemplos: “01JAN25”, “31DEZ23”, “15JUN24”, …
+
+I) Data Vencimento (opcional, manual)
+O que é: data limite em que se espera que o compromisso financeiro com aquele item se efetive sem prejuízos.
+Formato: data (data; formato “ddMMMyy”).
+Como preencher: selecionar a data do vencimento. Se na ocasião do salvamento da captação a "Data Vencimento" não seja preenchida pelo usuário será copiada a mesma data de "Data Movimento", caso "Data Movimento" esteja vazia será copiada a data de "Data Aquisição".
+Exemplos: “01JAN25”, “31DEZ23”, “15JUN24”, …
+
+J) Data movimento (opcional, manual)
+O que é: data em que houve a decisão e efetivo compromisso financeiro com aquele item.
+Formato: data (data; formato “ddMMMyy”).
+Como preencher: selecionar a data efetiva do movimento, o pagamento em si. Importante: define o mês/ano como base para os cálculos de dos movimentos efetivados.
+Exemplos: “01JAN25”, “31DEZ23”, “15JUN24”, …
+
+K) Movimento (obrigatório, manual)
+O que é: tipo de movimento que se encontra no lançamento.
+Formato: texto (lista suspensa; validação do texto = “Entrada”, “manejo” ou “Saída” (exatamente assim)).
+Como preencher: selecione na lista o tipo de movimento. Importante: “Entrada” aumenta patrimônio; “Saída” diminui patrimônio e “manejo” transferência interna (origem e destino do próprio usuário), efeito patrimonial zero.
+Exemplos: “Entrada”, “Saída”, “manejo”, …
+
+L) Valor (obrigatório, manual)
+O que é: valor total do lançamento.
+Formato:  moeda (moeda; “R$#,##0.00_);[Red]-R$#,##0.00”).
+Como preencher: escrever valor positivo para entradas, saídas e manejos (lançamento padrão). Casos de reembolsos, ajustes, estornos são classificados como saída, mas recebem sinal negativo para reposição patrimonial dentro das respectivas categorias/subcategorias.
+Exemplos: “R$1.120,00”, “R$36,95”, “R$600,00”, “-R$35,50”, …
+
+M) Valor por unidade (obrigatório, automático)
+O que é: preço unitário calculado com base na unidade possivelmente escolhida.
+Formato: texto curto (moeda; “R$#,##0.00_);[Red]-R$#,##0.00” + texto livre; 50 caracteres).
+Como preencher: o texto é gerado automaticamente pelo resultado de uma fórmula “valor por unidade/ Quantidade” facilitando o comparativo da evolução dos custos.
+Exemplos: “R$1.120,00/mês (aluguel)”, “R$2,00/Kg (sal)”, “R$50,00/bilhete (ingresso)”, …
+
+N) Modalidade (obrigatório, manual)
+O que é: meio de pagamento/recebimento.
+Formato: texto (lista suspensa; validação do texto = “Boleto”, “C. Crédito”, “C. Débito, “DDA”, “Depósito Imediato”, “DOC/TED”, “Espécie”, “PIX”, “Cartão de Transporte”, “Saque”, “TEF”, “Transferência Eletrônica”).
+Como preencher: escolha a modalidade utilizada.
+Exemplos: “Boleto”, “Espécie”, “C. Crédito ","PIX ", …
+
+O) Origem do valor (obrigatório, manual)
+O que é: conta (ou entidade) de onde sai o dinheiro (na Saída) ou de onde vêm (na Entrada).
+Formato: texto (lista suspensa; validação do texto = “Espécie A/B”, “Banco A/B/C/D/E/F P01/P02”, “Cont. Pag.”, “C. Transporte P01/P02”, “Fornecedor”, “Prestador”, “Pagador”, “Recebedor”, “Doador”).
+Como preencher: selecionar a origem do valor.
+Exemplos: “Espécie A”, “Banco B P01”, “Conta de Pagamento A P02”, “Fornecedor”, …
+
+P) Destino do valor (obrigatório, manual)
+O que é: conta (ou entidade) de destino (para onde vai o dinheiro).
+Formato: texto (lista suspensa; validação do texto = “Espécie A/B”, “Banco A/B/C/D/E/F P01/P02”, “Cont. Pag.”, “C. Transporte P01/P02”, “Fornecedor”, “Prestador”, “Pagador”, “Recebedor”, “Doador”).
+Como preencher: selecionar o destino do valor.
+Exemplos: “Prestador”, “Fornecedor”, “Recebedor”, …
+
+Q) Pagador (obrigatório, manual)
+O que é: parte (responsável) que paga o movimento.
+Formato: texto (lista suspensa; validação do texto = “Usuário”, “Prestador”, “Fornecedor”, “Pagador”, “Recebedor”, “Doador”).
+Como preencher: selecionar a parte pagadora.
+Exemplos: “Usuário”, “Prestador”, “Pagador”, …
+
+R) Recebedor (obrigatório, manual)
+O que é: parte (responsável) que recebe o movimento.
+Formato: texto (lista suspensa; validação do texto = “Usuário”, “Prestador”, “Fornecedor”, “Pagador”, “Recebedor”, “Doador”).
+Como preencher: selecionar a parte recebedora.
+Exemplos: “Fornecedor”, “Recebedor”, “Usuário”, “Prestador”, …
+
+S) Observação (opcional, manual)
+O que é: texto livre para notas.
+Formato: texto médio (texto livre; 250 caracteres).
+Como preencher: escrever justificativas, esclarecimentos, detalhes que ajudem auditoria/fechamento.
+Exemplos: …
+
+T) Categoria (obrigatório, manual)
+O que é: categoria do lançamento.
+Formato: texto (lista suspensa; validação do texto = “Fidelidade”, “Essencial”, “Incremental”, “Cobertura”, “Emergencial”, “Projetos”, “Amenidades”, “Manejo”, “Renda”.
+Como preencher: escolher da lista de categorias.
+Exemplos: Categoria “Renda” apenas em “Entradas” que compõem a base (subcategoria “Renda”), “Manejo” para transferências internas (subcategoria “Movimento”) e demais categorias para “Saídas”, …
+
+U) Subcategoria (obrigatório, manual)
+O que é: subcategoria do lançamento.
+Formato: texto (lista suspensa vinculada à categoria selecionada; validação do texto = quantidade observada: ~63 subcategorias distribuídas pelas categorias, p. ex.: A categoria “Fidelidade” possui todas as subcategorias já predeterminadas que são: “Dízimo”, “Oferta | Pacto”, “Oferta Missionária”, “Oferta Humanitária”, “Ofertas diversas”, “Outros (Fidelidade)”).
+Como preencher: escolher exclusivamente da lista vinculada à categoria (evita divergências e complexidade na escolha).
+Exemplos: “Aluguel” da categoria “Essencial”, “Oferta Humanitária” da categoria “Fidelidade”, “Movimento” da categoria “Manejo”, “Outros (Fidelidade)” da categoria “Fidelidade”, …
+Regras
+Manejo: se origem e destino são contas do usuário, a operação deve gerar efeito patrimonial zero (soma dos saldos não muda).
+Atalhos:
+Devolver Dízimo: cria lançamentos de saída para Dízimo conforme saldo pendente do mês.
+Ofertar: propõe as saídas de Ofertas regulares (grau) e permite pontuais em Outros (Fidelidade).
+Transferir: fluxo guiado para Manejo (evita erro de classificação).
+
+
+Inferência de competência: pelo campo Data.
+Classificação assistida: sugerir categoria/sub por padrão (ex.: supermercado → Essencial/Alimentação se existir); o usuário confirma.
+Validações
+Proibir Manejo com origem=destino.
+Alertar duplicatas (mesma data/valor/origem/destino/obs em pequena janela de tempo).
+Em Entrada de Renda, exigir categoria=Renda e sub=Renda (senão alerta).
+Bloqueios no Sábado.
+Orientações práticas de preenchimento
+Em Entrada que é Renda, obrigatoriamente use categoria=Renda e subcategoria=Renda; isso garante cálculo correto do dízimo/ofertas.
+Em Saída de Fidelidade, as ofertas pontuais devem ir em Fidelidade → Outros (Fidelidade) (não alteram a base/grau).
+Use modalidade e origem/destino da lista para manter a conciliação íntegra.
+Preencha as datas com rigor: é o que define mês/ano de vigência do item e outros parâmetros importantes.
+Em Manejo, confira origem/destino e evite confundir com Entrada/Saída.
+
+
+Aba RD – Renda
+Propósito
+ Apurar a base de renda do mês e determinar o grau de meta do próprio mês.
+Como apura a base
+Base de renda (mês) = soma de todos os lançamentos com:
+ tipo = Entrada e categoria = Renda e subcategoria = Renda com data no mês.
+Regras
+Dízimo é sempre 10% da base.
+Ofertas regulares (Pacto/Missionária/Humanitária/Diversas) incidem sobre a mesma base.
+Renda variável/13º/prêmios: entram normalmente em Renda.
+Reembolsos/indenizações/transferências internas: não entram em Renda; classificar como Manejo.
+Determinar o grau:
+Use a base do mês e localize a faixa: Sub, M1, M2, M3, M4 ou M5.
+Limites inclusivos conforme padrão (ex.: ≤1000 é Sub; >1000 e ≤4000 é M1).
+Validações
+Checar entradas com categoria=Renda mas subcategoria vazia → alertar para corrigir.
+Conferir datas fora do mês (retroativos) e reprocessar.
+Exemplo
+Base do mês = R$ 4.250 → Grau = M2. Dízimo = R$ 425. Ofertas regulares = percentuais de M2 sobre R$ 4.250.
+
+Aba EV – Envelope
+Propósito
+ Aplicar a ordem de consagração:
+Confirmar base (vinda de RD)
+Dízimo (10%) automático
+Ofertas regulares conforme grau
+Ofertas pontuais (livres) em Outros (Fidelidade)
+Regras
+Ordem de aplicação: regulares primeiro; pontuais depois.
+Pontuais não alteram a base nem o grau do mês.
+Distribuição por categoria (grau): além de Fidelidade, EV pode exibir a proposta de envelope para Essencial/Incremental/Cobertura/Emergencial/Projetos/Amenidades (orçamento orientativo).
+Arredondamento: somar em centavos; ajustar centavos residuais em Diversas (ou regra definida em AJ).
+Modo sabático: permitido planejar/confirmar; vedado efetivar lançamentos financeiros.
+Validações
+Dízimo não é editável (10%).
+Ofertas regulares do grau devem respeitar a soma da Fidelidade daquele grau.
+Pontuais só em Outros (Fidelidade).
+Exemplo
+Base = R$ 2.000; Grau = M1 → Fidelidade 20% (R$ 400), sendo Dízimo 10% (R$ 200) + Ofertas 10% (R$ 200) distribuídas entre Pacto/Miss./Hum./Diversas conforme M1. Se o usuário ofertar R$ 50 a mais, lançar em Outros (Fidelidade).
+
+Aba PL – Patrimônio
+Propósito
+ Mostrar saldos por conta e realizar a conciliação do mês.
+Definições
+Saldo inicial (mês) e saldo final (após lançamentos).
+ΔCalculado (conta) = Σ Entradas na conta − Σ Saídas na conta ± (Manejos para a conta − Manejos da conta).
+ΔReal (conta) = saldo final − saldo inicial.
+Divergência = ΔReal − ΔCalculado.
+Regras
+Sem “fundos virtuais” por categoria no MVP (só contas).
+Divergência ≠ 0 → marcar pendência para revisão (abrir lista de lançamentos).
+Fechamento do mês: só permite “fechar” quando divergências por conta estiverem resolvidas (ou registradas com justificativa).
+Validações
+Saldos iniciais plausíveis (não negativos sem motivo).
+Manejos coerentes (origem/destino existentes).
+Em caso de ajuste manual de saldo, gerar lançamento de ajuste (categoria técnica) para manter rastro.
+
+Aba MR – Monitor
+Propósito
+ Acompanhar indicadores mínimos e alertas para correção de rota.
+KPIs mínimos
+Fidelidade/Renda (%): (Dízimo + Ofertas regulares registradas) / Base de Renda do mês.
+Aderência por categoria: Realizado / Envelope (grau) para Essencial/Incremental/Cobertura/Emergencial/Projetos/Amenidades (nível básico).
+Saldo do mês (opcional no MVP): entradas − saídas (exclui Manejo).
+Alertas sugeridos
+Fidelidade abaixo do padrão do grau (ex.: < 100% do previsto) → “Regularize suas consagrações”.
+Categoria estourada (Realizado > 110% do envelope) → “Rever gastos em Essencial”, por exemplo.
+Sem lançamentos há X dias (higiene de registro).
+Regras
+Plano gratuito: limitar visualizações por período e/ou mostrar janela mais curta (ex.: mês atual).
+Pro: KPIs completos sem limite.
+Sábado: sem alertas e sem cards que incentivem ação financeira.
+
+Aba AN – Analisar (leitura) – pós-MVP ampliado
+Propósito
+ Comparar mês a mês, por categoria/subcategoria (participação, variação M/M e A/A).
+ Regras
+Leitura somente; nada transacional.
+Evidenciar Fidelidade (Dízimo 10%; Ofertas por grau) com desvios e justificativas (notas) quando houver.
+
+Aba PN – Panorama (leitura) – pós-MVP ampliado
+Propósito
+ Tendências anuais: séries de Renda, Dízimo, Ofertas, Essencial etc., com anotações de eventos (13º, reforma, viagem).
+ Regras
+Leitura somente; foco em entendimento macro e aprendizado histórico.
+
+Aba ML – Melhorando (backlog)
+Propósito
+ Coletar ideias e oportunidades; classificar por Agora / Próximo / Depois; servir de base para o roadmap.
+ Regras
+Não afeta o cálculo; ajuda a planejar evolução.
+
+Fechamento mensal (processo operacional)
+RD: confirme base do mês e o grau.
+EV: ver Dízimo e Ofertas regulares; acrescente pontuais se desejar.
+CR (dia a dia): registre as movimentações; use atalhos (Dízimo/Ofertar/Transferir).
+MR: revise KPIs e aja nos alertas (fora do Sábado).
+PL: concilie por conta (ΔReal vs ΔCalculado); resolva divergências.
+Export: gere CSV/PDF (resumo com marca d’água no plano gratuito; completo no Pro).
+Backup: crie o .mf.json para não perder histórico (lembrete recorrente).
+
+Regras específicas de categorias e subcategorias
+Fidelidade
+Dízimo: sempre 10% da base (não editável).
+Ofertas regulares: percentuais por grau (Pacto/Missionária/Humanitária/Diversas).
+Outros (Fidelidade): pontuais (extras), não mudam base nem grau.
+
+
+Essencial / Incremental / Cobertura / Emergencial / Projetos / Amenidades
+Usadas para orçamento (envelope) e para classificar saídas.
+O somatório das categorias segue a distribuição por grau definida em AJ.
+Plano gratuito: não é permitido editar a taxonomia;
+ Pro: personalização limitada (p.ex., renomear/ocultar/adicionar sub).
+
+Comunicação na interface (exemplos de textos das telas)
+Plano gratuito
+“Você está no plano gratuito. Algumas funções são resumidas.”
+“Categorias e subcategorias não são editáveis no plano gratuito.”
+“Exporte um PDF resumido com marca d’água ou desbloqueie o Pro para o relatório completo.”
+
+
+Apoiar (doação)
+“Ao apoiar, você ganha algumas melhorias: mais visualizações em MR/PL e limites de exportação mais flexíveis.”
+
+
+Pro (licença)
+“Pro ativado. Monitor, Patrimônio e Exportação completos estão liberados neste dispositivo.”
+
+
+Sabático
+“Agora é Sábado. Lançamentos e operações financeiras ficam temporariamente  restritos. Aproveite para ler e consagrar.”
+
+Boas práticas de validação
+Soma = 100% por grau (categorias) e dentro de Fidelidade (Dízimo + Ofertas).
+Faixas sem buracos/overlap (ex.: ≤1000, >1000 e ≤4000, …).
+Dízimo imutável (10%).
+Manejo sempre origem≠destino e efeito patrimonial zero.
+Conciliação exige divergência = 0 (ou justificada) para fechar mês.
+Arredondamento consistente (centavos residuais alocados sempre respeitando os somatórios estabelecidos por regra).
+Sábado respeitado (bloqueios e mensagens adequadas).
+
+Exemplos práticos rápidos
+Base e grau
+Entradas (Renda) no mês: R$ 3.800 → Grau M1.
+Dízimo = R$ 380. Ofertas regulares = M1 sobre R$ 3.800 (distribuídas entre Pacto/Miss./Hum./Diversas).
+
+
+Oferta pontual
+Além do previsto, usuário doa R$ 50: lançar em Fidelidade → Outros (Fidelidade) (não muda grau/base).
+
+
+Manejo
+Transferiu R$ 200 de Banco para Espécie → Manejo (origem: Banco, destino: Espécie).
+No total do patrimônio, Δ = 0.
+
+
+Conciliação
+Conta Banco: saldo inicial 1.000; final 1.300.
+ΔReal = 300. Lançamentos mostram entradas líquidas de 320 → divergência = -20 (buscar erro ou lançar ajuste com justificativa).
+
+
+Reembolso
+Recebeu reembolso de R$ 500 → Saída (origem: Pagador, destino: Espécie) Valor com sinal negativo (-R$).
+
+
+ΔReal = 300. Lançamentos mostram entradas líquidas de 320 → divergência = -20 (buscar erro ou lançar ajuste com justificativa).
+No total do patrimônio, Δ = 500.
+
+bora lapidar a tela Captar para ficar rápida, à prova de erro e fiel às suas regras abaixo vai um pacote completo: decisões-chave, layout sugerido, validações, automações (efetivar/reembolso/transferir), regras de negócio, snippet React/TS com validação e testes a fazer.
+
+objetivo (1 frase)
+Deixar a Captar simples e segura para registrar/editar Entradas, Saídas e Manejos — com atalhos inteligentes, validações firmes e automações que respeitam primícias, competência e Sábado.
+
+3 decisões-chave (com trade-offs)
+Form first, assistido por regras (não wizard)
+Mais rápido para lançamentos diários; – exige validações robustas no submit.
+Listas dirigidas por Ajustes (tudo por referência)
+Padroniza Categoria/Sub/Contas/Modalidade; – depende de manter Ajustes bem cuidado.
+Atalhos contextuais (“Efetivar”, “Reembolso”, “Transferir”)
+Reduz cliques em rotinas comuns; – exige pequenos modais de busca/duplicação com invariantes.
+
+layout da tela (seções e campos)
+Cabeçalho
+Índice (auto, somente leitura, formato 0001, sequencial por ano vigente)
+Status (Ex.: “Pendente de Data Movimento” / “Efetivado”)
+Identificação
+Item (obrigatório, 50c)
+Marca (opcional, 50c) • Modelo/Tipo (opcional, 100c)
+Unidade (opcional, 50c) • Quantidade (opcional, número)
+Objeto (opcional, 50c)
+Datas
+Data Aquisição (obrigatória) — define competência prevista
+Data Vencimento (opcional) — auto: se vazio no salvar → copia de Data Movimento; se também vazia → copia Data Aquisição
+Data Movimento (opcional) — efetivação; define competência realizada
+Movimento
+Tipo (Entrada | Saída | manejo) — dropdown
+Valor (obrigatório; positivo para padrão; negativo quando for Reembolso/Ajuste/Estorno)
+Valor por unidade (auto: valor / quantidade + sufixo da unidade)
+Meio & Partes
+Modalidade (lista: Boleto, C. Crédito, C. Débito, DDA, Depósito Imediato, DOC/TED, Espécie, PIX, Cartão de Transporte, Saque, TEF, Transferência Eletrônica)
+Origem do valor (obrigatória)
+Destino do valor (obrigatória)
+Pagador (obrigatória) • Recebedor (obrigatória)
+Classificação
+Categoria (obrigatória; lista: Fidelidade, Essencial, Incremental, Cobertura, Emergencial, Projetos, Amenidades, Manejo, Renda)
+Subcategoria (obrigatória; dependente da Categoria — ~63 opções, ex.: em Fidelidade: Dízimo, Oferta | Pacto, Missionária, Humanitária, Diversas, Outros)
+Observação (texto livre, 250c)
+Atalhos (botões)
+Efetivar (filtra lançamentos sem Data Movimento → editar em lote/um a um)
+Reembolso (duplica item, inverte sinal do valor, adiciona “Reembolso” ao Item, novo Índice)
+Transferir (Manejo) (abre fluxo guiado: Origem ≠ Destino, ambos “contas do usuário”, Categoria/Sub = Manejo/Movimento)
+
+validações & travas (essenciais)
+Obrigatórios: Índice(auto), Item, Data Aquisição, Movimento, Valor, Origem, Destino, Pagador, Recebedor, Categoria, Subcategoria.
+Regras de consistência
+Manejo: Origem e Destino devem ser contas do usuário; proibido Origem = Destino; Categoria=Manejo, Sub=Movimento.
+Entrada de Renda: exigir Categoria=Renda, Sub=Renda (senão alerta).
+Valor por unidade: calcula se Quantidade > 0.
+Data Vencimento autofill no salvar (conforme regra acima).
+Bloqueio de duplicata: alerta se (Data Movimento ±3 dias) & Valor & Origem & Destino & Item iguais.
+Sábado: modo reverente opcional — exibir aviso e pedir confirmação adicional para ações seculares entre sex pôr-do-sol e Sábado pôr-do-sol (padrão: alertar; poderá “bloquear” se família optar).
+
+automações & atalhos
+Efetivar
+Modal com busca/filtragem de itens sem Data Movimento (por período/Item/Categoria).
+Ação em lote: aplicar mesma Data Movimento e Modalidade, mantendo rastreabilidade (log).
+Reembolso
+Seleciona item original → cria novo lançamento:
+Índice novo, Item = <Item original> — Reembolso, Valor = −abs(Valor), Movimento = Saída, copia Categoria/Sub/Partes/Modalidade; permite editar Data Movimento.
+Transferir (Manejo)
+Wizard de 2 passos: (1) escolher Origem/Destino (validar ≠), (2) Valor e Data Movimento;
+Força: Categoria=Manejo, Sub=Movimento; efeito patrimonial zero (no relatório patrimonial).
+Classificação assistida
+Sugestões por heurística (últimos lançamentos semelhantes): ex. descrição contém “mercado” → Essencial/Alimentação (usuário confirma).
+

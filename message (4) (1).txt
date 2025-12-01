@@ -1,0 +1,37 @@
+Pronto! Fiz uma varredura inicial da “Base PlaniF 24” e gerei três entregas para orientar nosso trabalho em linguagem simples:
+
+1. Tabelas interativas (na sua tela)
+
+* Resumo das Abas — lista cada aba, quantas linhas/colunas e uma amostra de colunas.
+* Dicionário de Dados — para cada aba/campo: tipo sugerido (data, número, texto…), se costuma estar preenchido, exemplos de valores.
+
+2. Arquivos para baixar e continuar a documentação
+
+* [Baixar o Inventário (Excel)](sandbox:/mnt/data/Inventario_Base_PlaniF24.xlsx) — contém as duas tabelas (Resumo\_Abas e Dicionario\_Dados).
+* [Baixar a Ficha de Abas (Markdown)](sandbox:/mnt/data/Ficha_de_Abas_Base_PlaniF24.md) — um esqueleto amigável para preencher o propósito de cada aba, regras de preenchimento e relações entre abas. Os campos “TBD” (“a completar”) são propositalmente simples para você escrever com suas palavras.
+
+Como usar (passos rápidos, sem jargão)
+
+1. Abra o “Inventário (Excel)” e confira se os nomes das abas e colunas fazem sentido para você.
+2. No “Dicionário de Dados”, revise os tipos sugeridos (ex.: “data”, “número”, “texto”). Se algo estiver errado, anote.
+3. No “Ficha de Abas (Markdown)”, preencha:
+
+   * Propósito: em 1–2 frases, “para que serve esta aba no dia a dia”.
+   * Regras de preenchimento: quem preenche, quando (ex.: no dia do gasto, semanal), e com que frequência.
+   * Relações: se alguma coluna “aponta” para outra aba (ex.: Categoria → aba Categorias).
+
+Próximos passos (para destravar o MVP)
+
+* Me diga: quais 3–5 abas são as mais críticas no seu uso (ex.: Lançamentos, Categorias, Envelopes/Planos, Fundos, Relatórios)?
+* Com base nelas, eu transformo sua descrição em:
+
+  * Regras claras (ex.: como calcular dízimo e ofertas de cada receita, em que ordem).
+  * Processos simples (checklist do fechamento mensal, conciliação, revisão em família).
+  * Métricas úteis (fidelidade, poupança, execução do orçamento, reserva de emergência).
+
+Observação sobre termos
+
+* “Markdown” é só um tipo de arquivo de texto simples com marcações básicas. Você pode abrir no bloco de notas ou no VS Code; se preferir, posso converter para Word/PDF depois.
+* “Dicionário de Dados” é, em bom português, “descrição dos campos” — nada técnico demais: nome, tipo e exemplos.
+
+Se quiser, já me diga aqui os propósitos das 2–3 abas que você mais usa e eu atualizo o documento para você.

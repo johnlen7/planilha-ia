@@ -1,0 +1,163 @@
+Perfeito! Vou te ajudar a transformar a explicação da “Base PlaniF 24” em um processo claro, reproduzível e pronto para virar base do MVP do app Mordomia Financeira — respeitando os princípios de mordomia cristã adventista e boas práticas de produto.
+
+Objetivo
+
+Organizar, passo a passo, como a planilha foi usada até ago/2024 e como ela está estruturada, para extrair regras de negócio, fluxos e métricas que alimentarão o MVP.
+
+Roteiro de explicação (5 etapas)
+1) Fundamentos de Mordomia (contexto e governança)
+
+Princípios: dízimo (percentual e base), ofertas (modelos: regular, missão, projetos), prioridades bíblicas.
+
+Unidade de gestão: quem é a “família” (membros, papéis e autoridade de decisão).
+
+Ciclo de vida: datas de corte (mês financeiro), calendário e respeito ao sábado (evitar atividades seculares entre sex pôr-do-sol e sáb pôr-do-sol).
+
+Objetivos: quão “automatizado” é o rateio? quais metas (reserva, doações, dívidas, investimentos)?
+
+2) Mapa da Planilha (inventário técnico)
+
+Para cada aba, descreva:
+
+Nome e propósito (ex.: “Lançamentos”: registro diário de entradas/saídas).
+
+Campos: nome, tipo (texto, número, data), obrigatoriedade, validação, listas.
+
+Relações: como se conecta com outras abas (ex.: Categoria → Plano/Envelope).
+
+Células-chave e fórmulas: somatórios, percentuais, travas (ex.: dízimo = 10% * base).
+
+Regras de preenchimento: quem preenche, quando e com que frequência.
+
+3) Processos operacionais (o “como fazer” no dia a dia)
+
+Entrada de Receitas: fontes, periodicidade, data de competência vs. pagamento.
+
+Consagrações: ordem do rateio (dízimo → ofertas → poupança → despesas), bases de cálculo, exceções.
+
+Orçamento/Envelopes: definição de tetos, ajustes e rollovers.
+
+Pagamentos e Conciliação: uso de contas/cartões, fechamento e reconciliação bancária.
+
+Fundos & Metas: reservas, dívidas, investimentos (critérios de aporte e resgate).
+
+Relatórios: quais visões a família usa (mensal, anual, por centro, por projeto).
+
+4) Regras de negócio (declaração explícita)
+
+Liste como “se/então”, com percentuais e exceções:
+
+Base do dízimo: bruto? líquido? inclui rendas não recorrentes?
+
+Ofertas: percentuais fixos, faixas (ex.: 5–10%), destinos (missão local/global).
+
+Prioridades: quando falta recurso, o que é protegido? (ex.: dízimo nunca reduzido).
+
+Gatilhos: “se saldo do Fundo de Emergência < 6 meses → aumentar poupança para 15%”.
+
+5) Métricas e decisões
+
+KPIs: taxa de fidelidade (dízimo/oferta sobre renda), taxa de poupança, runway da reserva, % orçamento executado, tendência de dívidas.
+
+Alertas: desvios > X%, categorias estouradas, atraso de conciliação.
+
+Relatórios do MVP: mensal, anual, por centro de custo, por destino de doação.
+
+Templates rápidos (para documentar de forma consistente)
+A) Ficha de Aba (YAML)
+aba: Lançamentos
+proposito: Registro de todas as transações
+campos:
+  - nome: data
+    tipo: date
+    obrigatorio: true
+  - nome: tipo
+    tipo: enum[receita, despesa, transferencia]
+    obrigatorio: true
+  - nome: valor
+    tipo: number
+    obrigatorio: true
+  - nome: categoria
+    tipo: ref(Categorias.nome)
+    obrigatorio: true
+relacoes:
+  - de: categoria
+    para: Categorias.nome
+formulas_chave:
+  - nome: total_mes
+    definicao: soma(valor) por mês
+regras_preenchimento:
+  - "Lançar no dia do fato; conciliar semanalmente."
+
+B) Regra de Negócio (DSL simples)
+regra: Consagrações pós-receita
+quando: transacao.tipo == "receita"
+entao:
+  - alocar "Dízimo" = 0.10 * transacao.valor_base
+  - alocar "Oferta Regular" = faixa(0.05..0.10) * transacao.valor_base
+  - alocar "Poupança" = 0.10 * transacao.valor_base
+  - restante -> "Custeio"
+excecoes:
+  - "Receitas não recorrentes usam oferta mínima de 0.05"
+ordem: ["Dízimo","Oferta Regular","Poupança","Custeio"]
+
+C) Processo Operacional (checklist)
+processo: Fechamento Mensal
+passos:
+  - Fechar lançamentos até dia 28 (competência)
+  - Calcular consagrações e aplicar rateio
+  - Ajustar envelopes e metas
+  - Conciliar com extratos
+  - Gerar relatório e revisar em família
+SLA: mensal (D+2)
+restricoes: evitar atividades seculares sexta-pôr-do-sol a sábado-pôr-do-sol (America/Sao_Paulo)
+
+“Como falar comigo” (prompts prontos)
+
+Inventário de abas
+“Liste e descreva todas as abas da Base PlaniF 24 no formato ‘Ficha de Aba’.”
+
+Campos e validações
+“Para a aba Lançamentos, gere a lista de campos com tipo, obrigatoriedade e regras de validação.”
+
+Extração de regras
+“A partir das fórmulas X/Y/Z, escreva as ‘Regras de Negócio’ no DSL simples.”
+
+Processo mensal
+“Converta meu passo-a-passo de fechamento mensal no template ‘Processo Operacional’ com SLAs e restrições de sábado.”
+
+KPIs
+“Defina KPIs e consultas necessárias para monitorar fidelidade, poupança, runway e execução orçamentária.”
+
+Exceções
+“Liste 10 exceções que já aconteceram e como a planilha tratou cada uma (regras explícitas).”
+
+Saídas esperadas (para virar base do MVP)
+
+Glossário (termos, percentuais, destinos).
+
+Dicionário de Dados (por aba/campo).
+
+Catálogo de Regras (DSL).
+
+Playbook Operacional (processos).
+
+Catálogo de Métricas/Relatórios (consultas e visualizações).
+
+Qualidade, segurança e fé/valores
+
+LGPD & privacidade: use exemplos anonimizados; evite nomes/CPFs; compartilhe amostras, não bases completas.
+
+Integridade financeira: mantenha as regras de consagração imutáveis por padrão (auditoria quando alterar).
+
+Sábado: planeje fechamentos e revisões fora do período sabático.
+
+Próximos passos práticos
+
+Inventário inicial: descreva 3–5 abas críticas (ex.: Lançamentos, Categorias, Envelopes/Planos, Fundos, Relatórios) usando os templates acima.
+
+Regras centrais: escreva as regras de dízimo, ofertas e poupança com percentuais, bases e exceções.
+
+Processo mensal: documente o fechamento mensal completo (checklist + SLA).
+
+Se quiser, posso varrer a planilha já anexada (“Base PlaniF 24”) e gerar automaticamente o inventário de abas e colunas como ponto de partida — daí seguimos preenchendo as partes conceituais (regras e processos). É só dizer “pode varrer a planilha”.

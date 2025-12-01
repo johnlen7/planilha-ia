@@ -1,0 +1,10 @@
+aba,cabecalho_linha,linhas_dados,colunas,amostra_campos
+Captar,1,1001,21,"0.0, Item, Und, Qtd, Objeto, data aquisição, data venc, data movimento, Movimento, valor"
+Renda,1,74,9,"Itens, Dados pertinentes, Classificação da renda, =Ajustes!W1, =Ajustes!X1, col_2, col_3, col_4, col_5"
+Monitor,2,74,12,"agosto, 2023.0, col_2, =IF(E3<=Ajustes!$W$2,Ajustes!$X$2,VLOOKUP(E3,Ajustes!$W$2:$X$7,2,TRUE)), col_4, col_5, col_6, =IF(J3<=Ajustes!$W$2,Ajustes!$X$2,VLOOKUP(J3,Ajustes!$W$2:$X$7,2,TRUE)), col_8, col_9"
+Analisar,1,68,47,"col, col_2, ANO, col_3, Média - Mês, col_4, Média - Ano, col_5, janeiro, col_6"
+Ajustes,1,63,15,"Modalidade, Origem/Destino Valor, Pagador/Recebedor, Subcategoria, Categoria, col_9, col_10, col_11, col_12, col_13"
+Envelope,1,54,26,"col_2, Mês analisado, agosto, 2023.0, col_3, col_4, col_5, col_6, col_7, col_8"
+Patrimonial,2,36,27,"col_2, col_3, Essencial, =SUMIFS($E$13:$E$39,$C$13:$C$39,D2), =E2/$E$8, =SUMIFS($E$13:$E$39,$C$13:$C$39,F2), =G2/$E$8, =SUMIFS($E$13:$E$39,$C$13:$C$39,H2), =I2/$E$8, =SUMIFS($E$13:$E$39,$C$13:$C$39,J2)"
+Panorama,3,14,10,"Mês, Renda, Fidelidade, Essencial, Incremental, Cobertura, Emergencial, Projetos, Amenidades, Manejo"
+Melhorando,12,8,5,"Distribur os valores alocados em cada instituição conforme categoria, OK, 2023-03-07 00:00:00, col, TEF"
