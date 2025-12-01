@@ -8,6 +8,7 @@
     "build": "tsc -p .",
     "start": "node dist/index.js",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
@@ -24,12 +25,7 @@
     "prisma": "^5.9.0",
     "@types/node": "^20.11.0"
   }
-  ,"scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc -p .",
-    "start": "node dist/index.js",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:generate": "prisma generate",
+  ,"scriptsExtra": {
     "seed": "ts-node prisma/seed.ts"
   }
 }
