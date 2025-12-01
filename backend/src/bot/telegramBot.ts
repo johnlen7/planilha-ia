@@ -1,4 +1,6 @@
 import { Telegraf, Context } from 'telegraf';
+// Declaração mínima para process sob ambientes sem @types disponível em build step
+declare const process: { env: Record<string,string|undefined> };
 import { TransacaoService } from '../services/transacaoService.js';
 import { RelatorioService } from '../services/relatorioService.js';
 import { extrairValorCentavos } from '../utils/parseValor.js';
@@ -10,8 +12,8 @@ import { NLUAdapter } from '../pipeline/nluAdapter.js';
 import { MotorConsagracao } from '../rules/engine.js';
 import { parseRegras } from '../rules/dsl.js';
 
-const BOT_TOKEN = process.env.BOT_TOKEN || process.env.TOKEN_TELEGRAM;
-if (!BOT_TOKEN) {
+const BOT_TOKEN = (process.env.BOT_TOKEN ?? process.env.TOKEN_TELEGRAM ?? '').trim();
+if (BOT_TOKEN.length === 0) {
   throw new Error('BOT_TOKEN/TOKEN_TELEGRAM não definido no ambiente');
 }
 
@@ -38,19 +40,22 @@ export function buildBot() {
   const nlu = new NLUAdapter();
 
   bot.start(async (ctx: Context) => {
+    if (!ctx.from) return;
     ctx.reply('Bem-vindo ao Morfin Bot. Envie um texto com valor para lançar ou use /relatorio.');
   });
 
   bot.command('relatorio', async (ctx: Context) => {
-    const usuarioId = ctx.from.id.toString();
+    if (!ctx.from) return;
+    const usuarioId = String(ctx.from.id);
     const hoje = new Date();
     const resumo = await relatorioService.relatorioMes(usuarioId, hoje.getFullYear(), hoje.getMonth()+1);
     ctx.reply(`Entradas: ${(resumo.entradasCentavos/100).toFixed(2)}\nSaidas: ${(resumo.saidasCentavos/100).toFixed(2)}\nManejo: ${(resumo.manejoCentavos/100).toFixed(2)}`);
   });
 
   bot.on('text', async (ctx: Context) => {
-    const usuarioId = ctx.from.id.toString();
-    const texto = ctx.message.text;
+    if (!ctx.from || !ctx.message || !('text' in ctx.message)) return;
+    const usuarioId = String(ctx.from.id);
+    const texto = (ctx.message as any).text as string;
     const { valorCentavos } = extrairValorCentavos(texto);
     if (!valorCentavos) {
       ctx.reply('Não detectei valor. Informe algo como "Comprei mercado 123,45".');
@@ -68,9 +73,10 @@ export function buildBot() {
   });
 
   bot.on('voice', async (ctx: Context) => {
-    const usuarioId = ctx.from.id.toString();
-    const voice = ctx.message.voice;
-    const fileId = voice.file_id;
+    if (!ctx.from || !ctx.message || !('voice' in ctx.message)) return;
+    const usuarioId = String(ctx.from.id);
+    const voice: any = (ctx.message as any).voice;
+    const fileId: string = voice.file_id;
     const midia = await midiaService.registrarCaptura(usuarioId, 'voice', fileId);
     const sttResult = await stt.transcribe(fileId);
     const nluRes = await nlu.classify(sttResult.transcript);
@@ -89,10 +95,12 @@ export function buildBot() {
   });
 
   bot.on('photo', async (ctx: Context) => {
-    const usuarioId = ctx.from.id.toString();
-    const photos = ctx.message.photo;
-    const largest = photos[photos.length - 1];
-    const fileId = largest.file_id;
+    if (!ctx.from || !ctx.message || !('photo' in ctx.message)) return;
+    const usuarioId = String(ctx.from.id);
+    const photos: any[] = (ctx.message as any).photo;
+    if (!photos?.length) return;
+    const largest: any = photos[photos.length - 1];
+    const fileId: string = largest.file_id;
     const midia = await midiaService.registrarCaptura(usuarioId, 'photo', fileId);
     const ocrResult = await ocr.extract(fileId);
     const nluRes = await nlu.classify(ocrResult.text);
@@ -111,8 +119,9 @@ export function buildBot() {
   });
 
   bot.command('confirm', async (ctx: Context) => {
-    const usuarioId = ctx.from.id.toString();
-    const parts = ctx.message.text.trim().split(/\s+/);
+    if (!ctx.from || !ctx.message || !('text' in ctx.message)) return;
+    const usuarioId = String(ctx.from.id);
+    const parts = (ctx.message as any).text.trim().split(/\s+/);
     if (parts.length < 2) {
       ctx.reply('Uso: /confirm <midiaId> [entrada|saida|manejo]');
       return;

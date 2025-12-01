@@ -1,4 +1,4 @@
-import { PrismaClient, TipoTransacao } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import { LancamentoInputBase } from '../models/types.js';
 
 const prisma = new PrismaClient();
@@ -30,7 +30,7 @@ export class TransacaoService {
         usuarioId: input.usuarioId,
         indice,
         dataMovimento: input.dataMovimento,
-        tipo: input.tipo as TipoTransacao,
+        tipo: input.tipo as any,
         valorCentavos: input.valorCentavos,
         origemContaId: input.origemContaId,
         destinoContaId: input.destinoContaId,
